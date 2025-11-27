@@ -228,11 +228,26 @@ This is closer to real-world IDS deployment.
 | Random Forest (tuned)    | Best     | Best        | Best   | Recommended model            |
 
 ---
+
 ## **Notes**
 
 * Raw CTU logs are **NOT** included (size limitations)
 * Use the Google Drive intermediate file set to run the project
-* Project is reproducible end-to-end
 
----
+## References
 
+This project builds upon prior academic research in IoT security, anomaly detection, and machine-learning-based intrusion detection systems. Following the course requirement, we cite two scholarly works:  
+1. **Prior foundational research** that provides the underlying theoretical and methodological basis for our project.  
+2. **A more recent contemporary work** that extends this research direction and contextualizes our approach.
+
+### 1. Prior Foundational Research  
+Liang, Y., & Vankayalapati, N. (2023). *Machine Learning and Deep Learning Methods for Better Anomaly Detection in IoT-23 Dataset Cybersecurity*.  
+This paper investigates ML/DL algorithms—including Decision Trees, Random Forests, Naive Bayes, SVM, and CNNs—on the IoT-23 dataset and demonstrates why Decision Trees offer the best accuracy-to-compute-time ratio for real-time IoT anomaly detection.  
+This work forms the **core foundation** of our methodology, dataset selection, preprocessing decisions, and model comparison strategy.  
+
+### 2. Contemporary Supporting Research  
+Stoian, N. A. (2020). *Machine Learning for Anomaly Detection in IoT Networks: Malware Analysis on the IoT-23 Dataset*. University of Twente.  
+This research extends the direction of the IoT-23 anomaly detection literature by evaluating the performance of advanced ML algorithms (including Random Forests and SVM) on large-scale traffic captures.  
+It reinforces the validity of using multi-scenario evaluation, supports the adoption of scenario-preserving splits (which we implement), and motivates our comparative results across tuned and untuned models.
+
+These two references frame our system security project within the existing academic landscape, acknowledging both the foundational work and contemporary developments in IoT anomaly detection research.
