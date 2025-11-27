@@ -22,17 +22,13 @@ os.makedirs(OUT_DIR, exist_ok=True)
 print("\n=== LOADING CLEAN DATASET ===")
 df = pd.read_csv(INPUT_FILE)
 
-# ------------------------------------------------------
 # FIX LABEL INCONSISTENCY
-# ------------------------------------------------------
 df["label"] = df["label"].replace({"benign": "Benign"})
 
 print("\nLabel distribution AFTER fix:")
 print(df["label"].value_counts())
 
-# ------------------------------------------------------
 # TRAIN/TEST SPLIT BEFORE ANY ENCODING
-# ------------------------------------------------------
 X = df.drop(columns=["label"])
 y = df["label"]
 
@@ -43,9 +39,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-# ------------------------------------------------------
 # LABEL ENCODING (FIT ONLY ON TRAIN)
-# ------------------------------------------------------
 label_enc = LabelEncoder()
 y_train_enc = label_enc.fit_transform(y_train)
 y_test_enc = label_enc.transform(y_test)
@@ -54,9 +48,7 @@ y_test_enc = label_enc.transform(y_test)
 import joblib
 joblib.dump(label_enc, "saved_models/label_encoder.pkl")
 
-# ------------------------------------------------------
 # ENCODE CATEGORICAL FEATURES
-# ------------------------------------------------------
 cat_cols = ["proto", "conn_state", "history"]
 num_cols = [c for c in X.columns if c not in cat_cols]
 
@@ -74,12 +66,8 @@ X_test[cat_cols] = ord_enc.transform(X_test[cat_cols].astype(str))
 joblib.dump(ord_enc, "saved_models/ordinal_encoder.pkl")
 print("\nCategorical features encoded with OrdinalEncoder.")
 
-# ------------------------------------------------------
 # SCALE NUMERIC FEATURES
-# ------------------------------------------------------
-# ------------------------------------------------------
 # CLEAN NUMERIC COLUMNS (Zeek uses "-" for missing data)
-# ------------------------------------------------------
 for col in num_cols:
     X_train[col] = pd.to_numeric(X_train[col], errors="coerce")
     X_test[col] = pd.to_numeric(X_test[col], errors="coerce")
@@ -90,9 +78,7 @@ X_test[num_cols] = X_test[num_cols].fillna(0)
 
 print("\nNumeric cleaning complete.")
 
-# ------------------------------------------------------
 # SCALE NUMERIC FEATURES
-# ------------------------------------------------------
 scaler = StandardScaler()
 X_train[num_cols] = scaler.fit_transform(X_train[num_cols])
 X_test[num_cols] = scaler.transform(X_test[num_cols])
@@ -102,9 +88,7 @@ joblib.dump(scaler, "saved_models/scaler.pkl")
 print("\nNumeric scaling complete.")
 
 
-# ------------------------------------------------------
 # SAVE FINAL SPLITS
-# ------------------------------------------------------
 X_train.to_csv(f"{OUT_DIR}/X_train.csv", index=False)
 X_test.to_csv(f"{OUT_DIR}/X_test.csv", index=False)
 pd.Series(y_train_enc).to_csv(f"{OUT_DIR}/y_train.csv", index=False)

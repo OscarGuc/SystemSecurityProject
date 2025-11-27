@@ -106,7 +106,7 @@ acc2 = accuracy_score(y_test, y_pred2)
 prec2, rec2, f12, _ = precision_recall_fscore_support(
     y_test, y_pred2, average="weighted"
 )
-
+#Metrics
 print(f"Accuracy: {acc2:.4f}")
 print(f"Precision: {prec2:.4f}")
 print(f"Recall: {rec2:.4f}")

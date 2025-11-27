@@ -15,32 +15,13 @@ from sklearn.metrics import (
     precision_recall_curve,
 )
 
-# ============================================================
 # CONFIG
-# ============================================================
-
 st.set_page_config(
     page_title="IoT Malware Detection Dashboard",
     layout="wide"
 )
 
-# ----------------- Dark mode toggle (simple CSS) -----------------
-dark_mode = st.sidebar.checkbox("🌙 Dark mode", value=True)
-
-if dark_mode:
-    st.markdown(
-        """
-        <style>
-        body { background-color: #111111; color: #EEEEEE; }
-        .stApp { background-color: #111111; color: #EEEEEE; }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-# ============================================================
 # LOAD DATA & MODELS
-# ============================================================
 
 @st.cache_resource
 def load_models_and_data():
@@ -70,9 +51,7 @@ CAT_COLS = [c for c in CAT_COLS if c in X_test.columns]
 NUM_COLS = [c for c in X_test.columns if c not in CAT_COLS]
 
 
-# ============================================================
 # METRIC HELPERS
-# ============================================================
 
 def compute_metrics(model, X, y, threshold=0.5):
     """Compute classification metrics with adjustable threshold."""
@@ -170,9 +149,7 @@ def plot_feature_importance(model, feature_names, top_k=15):
     return fig
 
 
-# ============================================================
 # STREAMLIT LAYOUT
-# ============================================================
 
 st.title("📡 IoT Malware Detection — Scenario-based Evaluation Dashboard")
 
@@ -190,9 +167,7 @@ tab_overview, tab_model, tab_threshold, tab_importance, tab_upload = st.tabs(
     ["🔎 Overview", "📊 Model Details", "🎚 Threshold Analysis", "🧬 Feature Importance", "📁 Upload & Test"]
 )
 
-# ============================================================
 # TAB 1 — OVERVIEW: Multi-model comparison
-# ============================================================
 
 with tab_overview:
     st.subheader("Overall Comparison (Scenario Test Set)")
@@ -224,9 +199,7 @@ with tab_overview:
     st.pyplot(fig)
 
 
-# ============================================================
 # TAB 2 — MODEL DETAILS
-# ============================================================
 
 with tab_model:
     st.subheader("Detailed Metrics for a Single Model")
@@ -265,9 +238,7 @@ with tab_model:
         st.info("PR curve not available.")
 
 
-# ============================================================
 # TAB 3 — THRESHOLD ANALYSIS
-# ============================================================
 
 with tab_threshold:
     st.subheader("Threshold Analysis (Malicious / Benign Trade-off)")
@@ -303,9 +274,7 @@ with tab_threshold:
     )
 
 
-# ============================================================
 # TAB 4 — FEATURE IMPORTANCE
-# ============================================================
 
 with tab_importance:
     st.subheader("Feature Importance (Explainability)")
@@ -320,9 +289,7 @@ with tab_importance:
         st.pyplot(fig_imp)
 
 
-# ============================================================
 # TAB 5 — UPLOAD & PREDICT
-# ============================================================
 
 with tab_upload:
     st.subheader("Upload CSV to Test the Models")

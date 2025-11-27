@@ -9,9 +9,7 @@ from sklearn.metrics import (
     classification_report
 )
 
-# ============================
 # Load Scenario Split
-# ============================
 
 X_train = pd.read_csv("data/processed/X_train_scenario.csv")
 X_test  = pd.read_csv("data/processed/X_test_scenario.csv")
@@ -21,9 +19,7 @@ y_test  = pd.read_csv("data/processed/y_test_scenario.csv")["label"]
 print("Train:", X_train.shape)
 print("Test:", X_test.shape)
 
-# ============================
 # Baseline Decision Tree
-# ============================
 
 print("\n=== Baseline Decision Tree (Scenario-Based) ===")
 dt = DecisionTreeClassifier(random_state=42)
@@ -55,9 +51,7 @@ joblib.dump(dt, "saved_models/decision_tree_scenario.pkl")
 print("\nSaved baseline scenario model → saved_models/decision_tree_scenario.pkl")
 
 
-# ============================
 # Tuned Decision Tree
-# ============================
 
 print("\n=== Tuned Decision Tree (Scenario-Based) ===")
 
@@ -95,7 +89,7 @@ acc2 = accuracy_score(y_test, y_pred2)
 prec2, rec2, f12, _ = precision_recall_fscore_support(
     y_test, y_pred2, average="weighted"
 )
-
+#Metrics
 print(f"Accuracy: {acc2:.4f}")
 print(f"Precision: {prec2:.4f}")
 print(f"Recall: {rec2:.4f}")

@@ -9,9 +9,7 @@ OUTPUT_DIR = "data/processed"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# ============================================================
-#               SCENARIO DEFINITIONS (FINAL)
-# ============================================================
+# SCENARIO DEFINITIONS (FINAL)
 
 TRAIN_SCENARIOS = [
     "CTU-IoT-Malware-Capture-3-1.csv",
@@ -34,9 +32,7 @@ print("\n=== USING SCRIPT:", __file__, "===")
 print("TRAIN SET:", TRAIN_SCENARIOS)
 print("TEST SET:", TEST_SCENARIOS)
 
-# ============================================================
-#                    LOAD + LABEL FIXING
-# ============================================================
+# LOAD + LABEL FIXING
 
 def load_and_fix(files):
     dfs = []
@@ -84,9 +80,7 @@ print("Train:", train_df.shape)
 print("Test:", test_df.shape)
 
 
-# ============================================================
-#               CLEAN LABELS — MALICIOUS FLAGGING
-# ============================================================
+# CLEAN LABELS — MALICIOUS FLAGGING
 
 # remove missing labels
 train_df = train_df[train_df["label"].notna()]
@@ -119,9 +113,7 @@ X_train = train_df.drop(columns=["label"])
 X_test  = test_df.drop(columns=["label"])
 
 
-# ============================================================
-#                    CATEGORICAL ENCODING
-# ============================================================
+# CATEGORICAL ENCODING
 
 cat_cols = ["proto", "conn_state", "history"]
 cat_cols = [c for c in cat_cols if c in X_train.columns]
@@ -143,9 +135,7 @@ X_test[cat_cols]  = ord_enc.transform(X_test[cat_cols])
 joblib.dump(ord_enc, "saved_models/ordinal_encoder_scenario.pkl")
 
 
-# ============================================================
-#                     NUMERIC SCALING
-# ============================================================
+# NUMERIC SCALING
 
 num_cols = [c for c in X_train.columns if c not in cat_cols]
 
@@ -163,9 +153,7 @@ X_test[num_cols]  = scaler.transform(X_test[num_cols])
 joblib.dump(scaler, "saved_models/scaler_scenario.pkl")
 
 
-# ============================================================
-#                         SAVE SPLIT
-# ============================================================
+# SAVE SPLIT
 
 X_train.to_csv(f"{OUTPUT_DIR}/X_train_scenario.csv", index=False)
 X_test.to_csv(f"{OUTPUT_DIR}/X_test_scenario.csv", index=False)
