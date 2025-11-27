@@ -10,9 +10,8 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import GridSearchCV
 
-# ============================
+
 # Load Scenario Split
-# ============================
 
 X_train = pd.read_csv("data/processed/X_train_scenario.csv")
 X_test  = pd.read_csv("data/processed/X_test_scenario.csv")
@@ -22,9 +21,7 @@ y_test  = pd.read_csv("data/processed/y_test_scenario.csv")["label"]
 print("Train:", X_train.shape)
 print("Test:", X_test.shape)
 
-# ============================
 # Baseline Random Forest
-# ============================
 
 print("\n=== Baseline Random Forest (Scenario-Based) ===")
 
@@ -62,9 +59,7 @@ joblib.dump(rf, "saved_models/random_forest_scenario.pkl")
 print("\nSaved baseline RF scenario model → saved_models/random_forest_scenario.pkl")
 
 
-# ============================
 # Tuned Random Forest
-# ============================
 
 print("\n=== Tuned Random Forest (Scenario-Based) ===")
 

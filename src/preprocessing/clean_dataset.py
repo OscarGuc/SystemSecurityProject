@@ -18,9 +18,7 @@ for f in files:
 df = pd.concat(dfs, ignore_index=True)
 print("\nCombined raw shape:", df.shape)
 
-# ============================================================
 # STEP 1 — IDENTIFY AND SPLIT THE ZEek-LABELED COLUMN SAFELY
-# ============================================================
 
 # The labeled Zeek column is always the LAST column
 last_col = df.columns[-1]
@@ -49,9 +47,7 @@ df = df.drop(columns=[last_col])
 
 print("\nExtracted clean label column.")
 
-# ============================================================
 # STEP 2 — DROP NON-USABLE COLUMNS
-# ============================================================
 
 DROP_COLS = [
     "ts", "uid", "id.orig_h", "id.resp_h",
@@ -64,18 +60,14 @@ df = df.drop(columns=existing, errors="ignore")
 
 print("\nDropped unused fields:", existing)
 
-# ============================================================
 # STEP 3 — DROP ROWS WITH NO LABEL
-# ============================================================
 
 df = df[df["label"].notna()]
 df = df[df["label"].astype(str).str.strip() != ""]
 
 print("\nAfter dropping empty-label rows:", df.shape)
 
-# ============================================================
 # STEP 4 — DROP ALL DUPLICATES BEFORE ANY PROCESSING
-# ============================================================
 
 before = len(df)
 df = df.drop_duplicates()
@@ -84,9 +76,7 @@ after = len(df)
 print(f"\nDropped {before - after} duplicate rows.")
 print("Final deduped shape:", df.shape)
 
-# ============================================================
 # STEP 5 — SAVE CLEAN DATASET
-# ============================================================
 
 df.to_csv(OUTPUT_FILE, index=False)
 print("\nSaved CLEAN final_dataset.csv →", OUTPUT_FILE)

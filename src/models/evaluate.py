@@ -12,9 +12,7 @@ from sklearn.metrics import (
 import matplotlib.pyplot as plt
 import os
 
-# ============================
 # Load Data
-# ============================
 
 X_test = pd.read_csv("data/processed/X_test_scenario.csv")
 y_test = pd.read_csv("data/processed/y_test_scenario.csv")["label"]
@@ -37,9 +35,7 @@ results = []
 
 print("\n=== Scenario Model Evaluation ===\n")
 
-# ============================
 # Evaluate each model
-# ============================
 
 for name, model in models.items():
     print(f"\n--- {name} ---")
@@ -98,9 +94,7 @@ for name, model in models.items():
         "auc": roc_auc
     })
 
-# ============================
 # Export comparison table
-# ============================
 
 results_df = pd.DataFrame(results)
 results_df.to_csv("reports/model_comparison_scenario.csv", index=False)
