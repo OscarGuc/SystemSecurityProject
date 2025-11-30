@@ -61,7 +61,7 @@ def load_and_fix(files):
 
         # drop useless columns
         DROP = [
-            "ts", "uid", "id.orig_h", "id.resp_h",
+            "uid", "id.orig_h", "id.resp_h",
             "local_orig", "local_resp", "service",
             "tunnel_parents", "detailed_label"
         ]
@@ -137,7 +137,7 @@ joblib.dump(ord_enc, "saved_models/ordinal_encoder_scenario.pkl")
 
 # NUMERIC SCALING
 
-num_cols = [c for c in X_train.columns if c not in cat_cols]
+num_cols = [c for c in X_train.columns if c not in cat_cols and c != "ts"]
 
 for col in num_cols:
     X_train[col] = pd.to_numeric(X_train[col], errors="coerce")
